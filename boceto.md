@@ -15,7 +15,7 @@ Validar codigo_de_pieza:
 
 % Si (validar(codigo_de_pieza)): False -> (A)  
 % Si (validar(codigo_de_pieza)): True  
-% Si (codigo_de_pieza == 0): True ->
+% Si (codigo_de_pieza == 0): True ->  
 [Salida]-> El total de piezas procesadas es: total_de_piezas  
 [Retorno] -> (fin)  
 % Si (codigo_de_pieza == 0): False  
