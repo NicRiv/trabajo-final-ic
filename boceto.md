@@ -66,7 +66,7 @@ flowchart TD
     3{codigo_de_pieza >= 01 and codigo_de_pieza <= 99}
     4{codigo_de_pieza != 0}
     
-    %% Último nodo del programa
+    %% ÚLTIMO NODO -> fin
     5>"El total de piezas procesadas es de: total_de_piezas"]
     
     %% salidas por pantalla
@@ -74,7 +74,7 @@ flowchart TD
 
     %% codigo de componente [xxCP]
     7>"Ingrese el código del componente"]
-    8[/"codigo_de_componente"/]
+    B[/"codigo_de_componente"/]
 
     %% validación: codigo de componente
     9{"codigo_de_componente es numero"}
@@ -95,7 +95,7 @@ flowchart TD
 
     %% precio del componente
     16>"Ingrese el precio del componente"]
-    17[/"precio_del_componente"/]
+    C[/"precio_del_componente"/]
 
     %% validar precio del componente
     18{"precio_del_componente es flotante"}
@@ -106,7 +106,52 @@ flowchart TD
 
     fin(("F"))
 
+    %% ##########################
     %% Red | Conexiones | Aristas
+    inicio --> 1
+    1 --> A
+    A --> 2
+    %% validacion de la pieza
+    2-->|"si"|3
+    3-->|"si"|4
+    4-->|"si"|6
+    %% negacion
+    2-->|"no"|1
+    3-->|"no"|1
+    %% fin del algoritmo
+    4-->|"no"|5
+    5-->fin
+
+    %% continua al componente
+    6-->7
+    7-->B
+    B-->9
+    %% validacion del componente
+    9-->|"si"|10
+    10-->|"si"|11
+    11-->|"si"|12
+    12-->|"si"|13
+    13-->15
+    15-->16
+    16-->C
+    %% negacion
+    9-->|"no"|7
+    10-->|"no"|7
+    11-->|"no"|7
+    %% finaliza el recuento de componentes
+    12-->|"no"|13
+    13-->14
+    %% termina los componentes de una pieza, pregunta por otra pieza
+    14-->1
+
+    %% validacion del precio del componente
+    C-->18
+    18-->|"si"|19
+    19-->|"si"|20
+    20-->16
+    %% negacion
+    18-->|"si"|16
+    19-->|"si"|16
 ```
 
 
