@@ -6,7 +6,8 @@ Boceto para realizar el trabajo final de Introducción a Ingeniería en Computac
 
 Variables: [codigo_de_pieza, codigo_de_componente, precio_del_componente, precio_de_la_pieza, total_de_piezas]
 
-**Inicio**  
+**Inicio del algoritmo**  
+(Inicio)  
 [_declaracion de variables_]  
 (A) Ingresar código de pieza: codigo_de_pieza  
 Validar codigo_de_pieza:  
@@ -26,6 +27,7 @@ Validar codigo_de_pieza:
 Validad codigo_de_componente:  
 - codigo_de_componente es número natural  
 - 01 <= codigo_de_componente <= 99  
+- codigo_de_componente pertenece a codigo_de_pieza
 
 % Si (validar(codigo_de_componente)): Flase -> (B)  
 % Si (validar(codigo_de_componente)): True  
@@ -47,29 +49,64 @@ Validar precio_del_componente:
 [Retorna] -> (C)
 
 
-**Final**
+**Fin del algoritmo**
 
 ## Diagrama en mermaid
 ```mermaid
 flowchart TD
-    in(inicio) --> a(input: Cp)
-    b("val(Cp)")
-    a-->b
-    b-->c{"Cp!=0"}-->|si|e
-    c-->|no|pre("El total de piezas procesadas")-->fi
-    e("print(Cp)")-->f(input: Cc)
-    f-->fx{"Cc!=0"}
-    fx -->|si|g{"Cc € Cp?"}
-    fx -->|no|a
-    g-->|no|f
-    g-->|si|h("val(Cc)")
-    h-->i("print(Cc)")
-    i-->j("input: pCc")
-    j-->k("val(pCc)")
-    k-->l("pCp += pCc")
-    l-->f
-    fi(final)
+    %% Etapas | Nodos | Elementos
+    inicio(("C"))
+    
+    %% codigo de pieza
+    1>"Ingrese el código de pieza"]    
+    A[/"codigo_de_pieza"/]
 
+    %% validación: codigo de pieza
+    2{"codigo_de_pieza es numero"}
+    3{codigo_de_pieza >= 01 and codigo_de_pieza <= 99}
+    4{codigo_de_pieza != 0}
+    
+    %% Último nodo del programa
+    5>"El total de piezas procesadas es de: total_de_piezas"]
+    
+    %% salidas por pantalla
+    6>"El codigo de la pieza es: codigo_de_pieza"]
+
+    %% codigo de componente [xxCP]
+    7>"Ingrese el código del componente"]
+    8[/"codigo_de_componente"/]
+
+    %% validación: codigo de componente
+    9{"codigo_de_componente es numero"}
+    10{"codigo_de_componente >= 01 and codigo_de_componente <= 99"}
+    %% el componente pertenece a la pieza
+    %% hacer la formula matematica
+    11{"codigo_de_componente € codigo_de_pieza"}
+    12{"codigo_de_componente != 0"}
+
+    %% procesa la existencia de la pieza
+    13["total_de_piezas += 1"]
+
+    %% salida precio de la pieza
+    14>"El precio de la pieza es: precio_de_la_pieza"]
+
+    %% salida codigo del componente
+    15>"El codigo del componente es: codigo_de_componente"]
+
+    %% precio del componente
+    16>"Ingrese el precio del componente"]
+    17[/"precio_del_componente"/]
+
+    %% validar precio del componente
+    18{"precio_del_componente es flotante"}
+    19{"precio_del_componente >= 10.00 and precio_del_componente <= 999.99"}
+
+    %% asignacion
+    20["precio_de_la_pieza += precio_del_componente"]
+
+    fin(("F"))
+
+    %% Red | Conexiones | Aristas
 ```
 
 
