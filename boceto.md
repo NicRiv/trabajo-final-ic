@@ -9,6 +9,7 @@ Variables: [codigo_de_pieza, codigo_de_componente, precio_del_componente, precio
 **Inicio del algoritmo**  
 (Inicio)  
 [_declaracion de variables_]  
+[Asignación] total_de_piezas = 0  
 (A) Ingresar código de pieza: codigo_de_pieza  
 Validar codigo_de_pieza:  
 - codigo_de_pieza es número natural
@@ -22,6 +23,7 @@ Validar codigo_de_pieza:
 % Si (codigo_de_pieza == 0): False  
 [Salida] Imprimir por pantalla codigo_de_pieza  
 [_declaracion de variables_]  
+[Asignacion] precio_de_la_pieza = 0  
 (B) Ingresar código de componente: codigo_de_componente  
 
 Validad codigo_de_componente:  
@@ -57,6 +59,8 @@ flowchart TD
     %% Etapas | Nodos | Elementos
     inicio(("C"))
     
+    %% Inicialización de variable
+    a1["total_de_piezas = 0"]
     %% codigo de pieza
     1>"Ingrese el código de pieza"]    
     A[/"codigo_de_pieza"/]
@@ -92,6 +96,8 @@ flowchart TD
 
     %% salida codigo del componente
     15>"El codigo del componente es: codigo_de_componente"]
+    %% Inicializa la variable precio_de_la_pieza
+    a2["precio_de_la_pieza = 0"]
 
     %% precio del componente
     16>"Ingrese el precio del componente"]
@@ -108,13 +114,15 @@ flowchart TD
 
     %% ##########################
     %% Red | Conexiones | Aristas
-    inicio --> 1
+    inicio --> a1
+    a1 --> 1
     1 --> A
     A --> 2
     %% validacion de la pieza
     2-->|"si"|3
     3-->|"si"|4
-    4-->|"si"|6
+    4-->|"si"|a2
+    a2 --> 6
     %% negacion
     2-->|"no"|1
     3-->|"no"|1
@@ -153,4 +161,29 @@ flowchart TD
     19-->|"si"|16
 ```
 
+## implementación de subprocesos
+División del algoritmo:  
+total nodos condicionales: 9  
+en este sentido: V(G) = P + 1 = 9 + 1  
+V(G) = 10  
 
+Si una arista comparte el mismo elemento(nodo)  
+se fusiona en subprocesos:  
+1 {1,2}  
+2 {3}  
+3 {4,5,6}  
+4 {7}  
+5 {8,9}  
+
+De esta manera: V(G) = 5 + 1  
+                V(G) = 6  
+
+Los nodos 1 y 2 representan la misma operación  
+que los nodos 4 y 5. 
+Por ende, es el mismo subproceso.  
+Los subprocesos en el algoritmo son tres: {1,2}, {4,5,6}, {8,9}.  
+
+Posibles nombres de los subprocesos:  
+"codigo_valido": {1,2}, {4,5}  
+"componente_valido": {4,5,6} = {codigo_valido(), 6}  
+"precio_valido": {8,9}
