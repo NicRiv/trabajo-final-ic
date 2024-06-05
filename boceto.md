@@ -119,7 +119,10 @@ flowchart TD
     1 --> A
     A --> 2
     %% validacion de la pieza
-    2-->|"si"|3
+    subgraph sub1 [codigo_valido]
+        direction TB
+        2-->|"si"|3
+    end
     3-->|"si"|4
     4-->|"si"|a2
     a2 --> 6
@@ -135,8 +138,14 @@ flowchart TD
     7-->B
     B-->9
     %% validacion del componente
-    9-->|"si"|10
-    10-->|"si"|11
+    subgraph sub2 [componente_valido]
+        direction TB
+        subgraph sub3 [codigo_valido]
+            direction TB
+            9-->|"si"|10
+        end
+        10-->|"si"|11
+    end
     11-->|"si"|12
     12-->|"si"|15
     15-->16
@@ -153,7 +162,10 @@ flowchart TD
 
     %% validacion del precio del componente
     C-->18
-    18-->|"si"|19
+    subgraph sub4 [precio_valido]
+        direction TB
+        18-->|"si"|19
+    end
     19-->|"si"|20
     20-->16
     %% negacion
