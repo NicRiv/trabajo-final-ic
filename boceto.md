@@ -70,6 +70,9 @@ flowchart TD
     3{codigo_de_pieza >= 01 and codigo_de_pieza <= 99}
     4{codigo_de_pieza != 0}
     
+    %% Mensaje de error
+    e1>"El código de la pieza no es valido"]
+
     %% ÚLTIMO NODO -> fin
     5>"El total de piezas procesadas es de: total_de_piezas"]
     
@@ -87,6 +90,10 @@ flowchart TD
     %% hacer la formula matematica
     11{"codigo_de_componente € codigo_de_pieza"}
     12{"codigo_de_componente != 0"}
+
+    %% Mensaje de error
+    e2>"El código del componente no es valido"]
+    e3>"El componente no pertenece a la pieza"]
 
     %% procesa la existencia de la pieza
     13["total_de_piezas += 1"]
@@ -106,6 +113,9 @@ flowchart TD
     %% validar precio del componente
     18{"precio_del_componente es flotante"}
     19{"precio_del_componente >= 10.00 and precio_del_componente <= 999.99"}
+
+    %% Mensaje de error
+    e4>"El precio del componente no es valido"]
 
     %% asignacion
     20["precio_de_la_pieza += precio_del_componente"]
@@ -127,8 +137,9 @@ flowchart TD
     4-->|"si"|a2
     a2 --> 6
     %% negacion
-    2-->|"no"|1
-    3-->|"no"|1
+    2-->|"no"|e1
+    3-->|"no"|e1
+    e1-->1
     %% fin del algoritmo
     4-->|"no"|5
     5-->fin
@@ -151,9 +162,11 @@ flowchart TD
     15-->16
     16-->C
     %% negacion
-    9-->|"no"|7
-    10-->|"no"|7
-    11-->|"no"|7
+    9-->|"no"|e2
+    10-->|"no"|e2
+    e2-->7
+    11-->|"no"|e3
+    e3-->7
     %% finaliza el recuento de componentes
     12-->|"no"|13
     13-->14
@@ -167,10 +180,11 @@ flowchart TD
         18-->|"si"|19
     end
     19-->|"si"|20
-    20-->16
+    20-->7
     %% negacion
-    18-->|"si"|16
-    19-->|"si"|16
+    18-->|"no"|e4
+    19-->|"no"|e4
+    e4-->16
 ```
 
 ## implementación de subprocesos
