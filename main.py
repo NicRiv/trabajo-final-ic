@@ -16,8 +16,8 @@ def main():
         print('Ingrese el código de la pieza.')
         codigo_de_pieza = input('> ') # se asigna la entrada a la variable CP.
         if not codigo_valido(codigo_de_pieza):
-            # Error: la entrada ingresada no es valida
-            print('Código no valido.')
+            # Error: la entrada ingresada no es válida.
+            print('Código no valido.\n')
     
         else:
             # La entrada es valida, se procesa el valor como tipo entero.
@@ -35,8 +35,24 @@ def main():
                     codigo_de_componente = input('> ') # Se asigna el valor de entrada a la variable CC.
                     
                     if not componente_valido(codigo_de_componente, codigo_de_pieza):
-                        # Error: la entrada ingresada no es valida
-                        print('Componente no valido')
+                        try:
+                            # Prueba si corresponde al valor 0, sino error.
+                            int(codigo_de_componente)
+                            if int(codigo_de_componente) == 0:
+                                # La entrada es 0, finaliza el recuento de componentes
+                                if precio_de_la_pieza != 0:
+                                    total_de_piezas += 1 # Agrega nueva pieza
+                                print(f'El precio de la pieza es: {precio_de_la_pieza}.\n')
+                                break
+                            
+                            else:
+                                # la entrada no corresponde a un numero
+                                # Error: la entrada ingresada no es válida.
+                                print('Componente no valido.\n')    
+                        except ValueError:
+                            # la entrada no corresponde a un numero
+                            # Error: la entrada ingresada no es válida.
+                            print('Componente no valido.\n')
                         
                     else:
                         # La entrada es valida, se procesa como tipo entero
@@ -44,23 +60,22 @@ def main():
                         
                         if codigo_de_componente != 0:
                             print(f'El código del componente es: {codigo_de_componente}')
-                            
-                            # Sección precio del componente
-                            print('Ingrese el precio del componente.')
-                            precio_del_componente = input('> ')
-                            
-                            if not precio_valido(precio_del_componente):
-                                print('Precio no valido.')
-                            else:
-                                precio_del_componente = float(precio_del_componente)
-                                precio_de_la_pieza += precio_del_componente
-                            
-                        else:
-                            # La entrada es 0, finaliza el recuento de componentes
-                            total_de_piezas += 1 # Agrega nueva pieza
-                            print(f'El precio de la piezas es: {precio_de_la_pieza}')
-                            break
 
+                            while True: # tercer ciclo                            
+                                # Sección precio del componente
+                                print('Ingrese el precio del componente.')
+                                precio_del_componente = input('> ')
+                                
+                                if not precio_valido(precio_del_componente):
+                                    # Error: la entrada ingresada no es válida.
+                                    print('Precio no valido.\n')
+                                    
+                                # se ingresa precio valido, pasa a un nuevo componente
+                                else:
+                                    precio_del_componente = float(precio_del_componente)
+                                    precio_de_la_pieza += precio_del_componente
+                                    break
+                                                            
             # finaliza programa al ingresar 0 como valor de entrada
             else:
                 print(f'El total de las piezas procesadas es de: {total_de_piezas}')
@@ -74,10 +89,12 @@ def codigo_valido(codigo, componente = False):
         if not componente:
             if int(codigo) >= 0 and int(codigo) <= 99:
                 return True
+        
         # Se valida el código de componente
         else:
-            if int(codigo) >= 1 and int(codigo) <= 9999:
+            if int(codigo) >= 101 and int(codigo) <= 9999:
                 return True
+    
     # No pasa los requisitos de validación.
     return False
 
@@ -86,6 +103,7 @@ def componente_valido(codigo, pieza):
         if int(codigo) % pow(10, len(str(pieza))) == pieza:
             # El código del componente corresponde a la pieza
             return True
+    
     # No pasa los requisitos de validación.
     return False
         
